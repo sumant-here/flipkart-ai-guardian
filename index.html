@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Guardian — Personal AI Privacy & Accountability Dashboard | Flipkart APM '29</title>
+  <meta name="description" content="Flipkart APM '29 Case Submission Prototype: AI Guardian helps users monitor, control, and protect themselves from personal AI agents in 2040.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- App Layout -->
+  <div class="app-container">
+
+    <!-- =====================================================================
+         SIDEBAR NAVIGATION
+         ===================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="#overview" class="brand-wrapper" onclick="navigateToScreen('overview')">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+          </div>
+          <div class="brand-title-group">
+            <h1>AI Guardian <span class="brand-badge">2040</span></h1>
+            <div class="brand-tagline">Your AI. Your rules.</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Governance</div>
+        
+        <a class="nav-item active" data-screen="overview" href="#overview">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Overview</span>
+          </div>
+        </a>
+
+        <a class="nav-item" data-screen="approvals" href="#approvals">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            <span>Action Review</span>
+          </div>
+          <span class="nav-badge danger pending-badge-count">3</span>
+        </a>
+
+        <a class="nav-item" data-screen="permissions" href="#permissions">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Privacy & Permissions</span>
+          </div>
+        </a>
+
+        <a class="nav-item" data-screen="activity" href="#activity">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <span>Trust Ledger</span>
+          </div>
+        </a>
+
+        <div class="nav-section-title">Cognitive Rights & Memory</div>
+
+        <a class="nav-item" data-screen="knowledge" href="#knowledge">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path></svg>
+            <span>AI Knowledge & Inferences</span>
+          </div>
+        </a>
+
+        <a class="nav-item" data-screen="settings" href="#settings">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>Protection Rules</span>
+          </div>
+        </a>
+
+        <div class="nav-section-title">Submission Context</div>
+
+        <a class="nav-item" data-screen="case-study" href="#case-study">
+          <div class="nav-item-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Flipkart APM '29 Case</span>
+          </div>
+          <span class="nav-badge neutral">Read</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="simulation-pill">
+          <div class="pulse-dot"></div>
+          <span>Simulated Edge Environment</span>
+        </div>
+
+        <div class="user-profile-badge">
+          <div class="user-avatar-info">
+            <div class="user-avatar">AM</div>
+            <div class="user-text-meta">
+              <div class="user-name">Aaryan Meena</div>
+              <div class="user-role">APM '29 Candidate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- =====================================================================
+         MAIN CONTENT WRAPPER
+         ===================================================================== -->
+    <main class="main-wrapper">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Navigation">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="topbar-page-info">
+            <h2 class="page-title" id="current-page-title">Executive Overview</h2>
+            <p class="page-subtitle" id="current-page-subtitle">Live status of personal AI agents, guardrails, and real-time alerts.</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="system-status-indicator">
+            <div class="status-dot-active"></div>
+            <span>6 Guardrails Active</span>
+          </div>
+          
+          <button class="demo-trigger-btn" onclick="startGuidedDemo()" title="Run through the Flipkart APM headphone purchase interception scenario">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Start Guided Demo</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+
+        <!-- =================================================================
+             SCREEN 1: EXECUTIVE OVERVIEW / DASHBOARD
+             ================================================================= -->
+        <section class="screen-view active" id="screen-overview">
+          
+          <!-- Context Banner -->
+          <div class="context-banner">
+            <div class="context-banner-text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <div>
+                <h3>2040 Paradigm Simulation: "Your AI. Your Rules."</h3>
+                <p>Personal agents perform tasks autonomously. AI Guardian ensures you maintain final authority over consequential actions.</p>
+              </div>
+            </div>
+            <button class="banner-action-btn" onclick="startGuidedDemo()">Explore APM Scenario</button>
+          </div>
+
+          <!-- 4 Metric Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">AI Actions Today</span>
+                <div class="metric-icon-box blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                </div>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-value" id="stat-total-actions">42</div>
+                <span class="metric-trend up">↑ 14% vs avg</span>
+              </div>
+              <div class="metric-subtext">Across 5 connected agent runtimes</div>
+            </div>
+
+            <div class="metric-card accent-danger">
+              <div class="metric-header">
+                <span class="metric-label">Awaiting Approval</span>
+                <div class="metric-icon-box amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                </div>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-value" id="stat-pending-actions" style="color:var(--danger);">3</div>
+                <span class="metric-trend danger">Action Required</span>
+              </div>
+              <div class="metric-subtext">High impact or financial threshold reached</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Active Permissions</span>
+                <div class="metric-icon-box green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-value" id="stat-active-perms">18 Active</div>
+                <span class="metric-trend up">2 Restricted</span>
+              </div>
+              <div class="metric-subtext">Zero-trust sandboxed sensor channels</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Safeguarded Spending</span>
+                <div class="metric-icon-box purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+              </div>
+              <div class="metric-value-row">
+                <div class="metric-value" id="stat-protected-budget">₹12,999</div>
+                <span class="metric-trend warning">Rule: &gt; ₹5,000</span>
+              </div>
+              <div class="metric-subtext">Protected from unverified auto-checkout</div>
+            </div>
+          </div>
+
+          <!-- Featured Spotlight Card: Flipkart Shopping Agent (Headphone Interception) -->
+          <div class="featured-approval-spotlight" id="dashboard-spotlight">
+            <div class="spotlight-left">
+              <div class="spotlight-badge">
+                <span class="pulse-red"></span>
+                <span>Critical Threshold Intercepted • Flipkart Shopping Agent</span>
+              </div>
+              <h3 class="spotlight-title">Sony WH-1000XM6 Headphones Purchase Intercepted</h3>
+              <p class="spotlight-description">
+                Your Flipkart Commerce Agent proposed auto-purchasing premium noise-cancelling headphones ahead of your upcoming Tokyo flight. This exceeds your ₹5,000 autonomous spending limit.
+              </p>
+              <div class="spotlight-meta-tags">
+                <span class="meta-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  Trigger: Tokyo Flight on Calendar
+                </span>
+                <span class="meta-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                  10 mins ago
+                </span>
+                <span class="meta-chip" style="color:#A7F3D0;">
+                  💡 Alternative: Refurbished XM5 at ₹7,499 (Save ₹5,500)
+                </span>
+              </div>
+            </div>
+
+            <div class="spotlight-right">
+              <div class="spotlight-price">
+                <div class="price-label">Proposed Cost</div>
+                <div class="price-amount">₹12,999</div>
+              </div>
+              <div class="spotlight-actions">
+                <button class="btn btn-outline-white btn-sm" onclick="handleRejectAction('act-101')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  Quick Reject
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="navigateToScreen('approvals')">
+                  Review &amp; Decide
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2-Column Section: Visual Breakdown & Safety Alerts -->
+          <div class="dashboard-grid-2">
+            <!-- Left: Activity Breakdown by Category -->
+            <div class="card">
+              <div class="card-header-row">
+                <div class="card-title-group">
+                  <h3>AI Agent Activity by Category</h3>
+                  <p>Distribution of 42 autonomous actions today</p>
+                </div>
+                <a class="card-action-link" href="#activity" onclick="navigateToScreen('activity')">
+                  <span>Full Ledger</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </div>
+
+              <div class="category-bars-list">
+                <div class="cat-bar-item">
+                  <div class="cat-bar-meta">
+                    <span class="cat-bar-name">
+                      <span class="agent-dot" style="background:#4F46E5;"></span>
+                      Commerce &amp; Shopping (Flipkart)
+                    </span>
+                    <span class="cat-bar-count">16 actions (38%)</span>
+                  </div>
+                  <div class="cat-bar-track">
+                    <div class="cat-bar-fill" style="width: 38%; background: #4F46E5;"></div>
+                  </div>
+                </div>
+
+                <div class="cat-bar-item">
+                  <div class="cat-bar-meta">
+                    <span class="cat-bar-name">
+                      <span class="agent-dot" style="background:#10B981;"></span>
+                      Calendar &amp; Routine Scheduling
+                    </span>
+                    <span class="cat-bar-count">9 actions (22%)</span>
+                  </div>
+                  <div class="cat-bar-track">
+                    <div class="cat-bar-fill" style="width: 22%; background: #10B981;"></div>
+                  </div>
+                </div>
+
+                <div class="cat-bar-item">
+                  <div class="cat-bar-meta">
+                    <span class="cat-bar-name">
+                      <span class="agent-dot" style="background:#F59E0B;"></span>
+                      Comms &amp; Executive Email
+                    </span>
+                    <span class="cat-bar-count">8 actions (18%)</span>
+                  </div>
+                  <div class="cat-bar-track">
+                    <div class="cat-bar-fill" style="width: 18%; background: #F59E0B;"></div>
+                  </div>
+                </div>
+
+                <div class="cat-bar-item">
+                  <div class="cat-bar-meta">
+                    <span class="cat-bar-name">
+                      <span class="agent-dot" style="background:#0284C7;"></span>
+                      Travel &amp; Mobility Pods
+                    </span>
+                    <span class="cat-bar-count">5 actions (12%)</span>
+                  </div>
+                  <div class="cat-bar-track">
+                    <div class="cat-bar-fill" style="width: 12%; background: #0284C7;"></div>
+                  </div>
+                </div>
+
+                <div class="cat-bar-item">
+                  <div class="cat-bar-meta">
+                    <span class="cat-bar-name">
+                      <span class="agent-dot" style="background:#8B5CF6;"></span>
+                      Wealth &amp; Micro-Finance
+                    </span>
+                    <span class="cat-bar-count">4 actions (10%)</span>
+                  </div>
+                  <div class="cat-bar-track">
+                    <div class="cat-bar-fill" style="width: 10%; background: #8B5CF6;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Potential Risks Detected -->
+            <div class="card">
+              <div class="card-header-row">
+                <div class="card-title-group">
+                  <h3>Potential Risks &amp; Guardrail Triggers</h3>
+                  <p>Actions intercepted before execution</p>
+                </div>
+                <a class="card-action-link" href="#approvals" onclick="navigateToScreen('approvals')">
+                  <span>Review (3)</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </div>
+
+              <div class="risks-list">
+                <div class="risk-item critical">
+                  <div class="risk-icon-wrapper">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  </div>
+                  <div class="risk-content">
+                    <div class="risk-header-row">
+                      <div class="risk-item-title">Autonomous Spending Limit Exceeded</div>
+                      <span class="risk-time">10m ago</span>
+                    </div>
+                    <div class="risk-item-desc">
+                      Flipkart agent prepared checkout for ₹12,999 (limit: ₹5,000). Payment held.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="risk-item warning">
+                  <div class="risk-icon-wrapper">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  </div>
+                  <div class="risk-content">
+                    <div class="risk-header-row">
+                      <div class="risk-item-title">Continuous GPS Telemetry Requested</div>
+                      <span class="risk-time">28m ago</span>
+                    </div>
+                    <div class="risk-item-desc">
+                      Travel agent requested background live location for 45 mins. Sandboxed.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="risk-item info">
+                  <div class="risk-icon-wrapper">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </div>
+                  <div class="risk-content">
+                    <div class="risk-header-row">
+                      <div class="risk-item-title">Private Health Event in Email Draft</div>
+                      <span class="risk-time">1h ago</span>
+                    </div>
+                    <div class="risk-item-desc">
+                      Comms agent drafted meeting reschedule mentioning medical checkup. Unsent.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity Feed Table -->
+          <div class="card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <h3>Live Agent Activity Feed</h3>
+                <p>Real-time stream of agent decisions and safety verifications</p>
+              </div>
+              <a class="card-action-link" href="#activity" onclick="navigateToScreen('activity')">
+                <span>View All History</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+            </div>
+
+            <div class="feed-table-wrapper">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    <th>Agent</th>
+                    <th>Action Proposed / Executed</th>
+                    <th>Personal Data Used</th>
+                    <th>Result</th>
+                    <th>Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-feed-tbody">
+                  <!-- Populated dynamically by script.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 2: ACTION REVIEW & APPROVAL CENTER
+             ================================================================= -->
+        <section class="screen-view" id="screen-approvals">
+          <div class="approvals-header-controls">
+            <div>
+              <h2 class="section-heading">High-Stakes Actions Awaiting Your Decision</h2>
+              <p class="section-description">These actions were intercepted by AI Guardian guardrail rules. Review impact, rationale, and alternatives before authorizing.</p>
+            </div>
+            <div class="tabs-group">
+              <button class="tab-btn active" onclick="renderPendingActions('pending')">Pending Review (<span class="pending-badge-count">3</span>)</button>
+              <button class="tab-btn" onclick="renderPendingActions('all')">All Actions</button>
+            </div>
+          </div>
+
+          <!-- Approvals List Container -->
+          <div class="approvals-grid" id="approvals-list-container">
+            <!-- Populated dynamically by script.js -->
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 3: PRIVACY & PERMISSIONS FIREWALL
+             ================================================================= -->
+        <section class="screen-view" id="screen-permissions">
+          <div class="approvals-header-controls">
+            <div>
+              <h2 class="section-heading">Agent Permissions &amp; Data Boundary Controls</h2>
+              <p class="section-description">Audit which personal data categories and hardware sensors connected agents can access. Revoking a permission restricts future queries.</p>
+            </div>
+            <div class="simulation-pill">
+              <div class="pulse-dot"></div>
+              <span>Simulated Sandboxing Active</span>
+            </div>
+          </div>
+
+          <div class="context-banner" style="border-left-color:var(--warning);">
+            <div class="context-banner-text">
+              <svg style="color:var(--warning);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <div>
+                <h3>Granular Edge Protection Note</h3>
+                <p>Revoking permission blocks new API transmissions. To delete previously inferred psychological traits, visit the <strong>AI Knowledge</strong> center.</p>
+              </div>
+            </div>
+            <button class="banner-action-btn" onclick="navigateToScreen('knowledge')">View Inferences</button>
+          </div>
+
+          <div class="permissions-grid" id="permissions-list-container">
+            <!-- Populated dynamically by script.js -->
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 4: ACTIVITY HISTORY / TRUST LEDGER
+             ================================================================= -->
+        <section class="screen-view" id="screen-activity">
+          <div class="approvals-header-controls">
+            <div>
+              <h2 class="section-heading">Activity History &amp; Trust Ledger</h2>
+              <p class="section-description">Chronological, tamper-evident audit record of all agent queries, executed tasks, and safety interventions.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Exported Ledger', 'Exported 2040 audit log in JSON format.', 'success')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Export Audit Trail
+            </button>
+          </div>
+
+          <!-- Filters Bar -->
+          <div class="ledger-filter-bar">
+            <div class="search-input-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="ledger-search-input" class="search-input" placeholder="Search by action, agent, or data accessed...">
+            </div>
+
+            <select id="ledger-agent-filter" class="select-filter" aria-label="Filter by AI Agent">
+              <option value="all">All Agents</option>
+              <option value="Flipkart">Flipkart Commerce</option>
+              <option value="Travel">Travel &amp; Commute</option>
+              <option value="Comms">Executive Comms</option>
+              <option value="Life Scheduler">Life Scheduler</option>
+              <option value="Wealth">Personal Wealth</option>
+            </select>
+
+            <select id="ledger-risk-filter" class="select-filter" aria-label="Filter by Risk Level">
+              <option value="all">All Risk Levels</option>
+              <option value="critical">Critical</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+
+          <!-- Ledger Table -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="feed-table-wrapper">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Agent</th>
+                    <th>Action Attempted / Performed</th>
+                    <th>Personal Data Used</th>
+                    <th>Outcome</th>
+                    <th>Risk</th>
+                    <th>Audit</th>
+                  </tr>
+                </thead>
+                <tbody id="ledger-tbody">
+                  <!-- Populated dynamically by script.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 5: PERSONAL DATA / AI KNOWLEDGE (SYNTHETIC MEMORIES)
+             ================================================================= -->
+        <section class="screen-view" id="screen-knowledge">
+          <div class="approvals-header-controls">
+            <div>
+              <h2 class="section-heading">What Your AI Knows: Inferred Psychological Profiles</h2>
+              <p class="section-description">In 2040, agents build psychological models to anticipate your needs. Review, correct, or exercise your Right to Synthetic Oblivion.</p>
+            </div>
+            <div class="simulation-pill">
+              <div class="pulse-dot"></div>
+              <span>Synthetic Oblivion Protocol Active</span>
+            </div>
+          </div>
+
+          <div class="context-banner">
+            <div class="context-banner-text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <div>
+                <h3>Human Agency Principle</h3>
+                <p>When an agent deduces a sensitive behavioral vulnerability (e.g. late-night impulse buying), you can purge the memory to reset model weights.</p>
+              </div>
+            </div>
+            <button class="banner-action-btn" onclick="startGuidedDemo()">Learn More</button>
+          </div>
+
+          <div class="knowledge-grid" id="knowledge-grid-container">
+            <!-- Populated dynamically by script.js -->
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 6: SETTINGS / PROTECTION RULES
+             ================================================================= -->
+        <section class="screen-view" id="screen-settings">
+          <div class="approvals-header-controls">
+            <div>
+              <h2 class="section-heading">Protection Rules &amp; Guardrail Boundaries</h2>
+              <p class="section-description">Define deterministic policies that intercept autonomous actions before they can commit funds or share sensitive data.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="handleSaveRules()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Save &amp; Enforce Rules
+            </button>
+          </div>
+
+          <div class="rules-container">
+            <!-- Rule 1: Spending Threshold -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  Autonomous Spending Approval Threshold
+                </h3>
+                <p>Any purchase proposed by Flipkart or commerce agents exceeding this amount is held in Action Review for biometric confirmation.</p>
+              </div>
+              <div class="rule-threshold-input-group">
+                <span style="font-weight:700; color:var(--text-secondary);">₹</span>
+                <input type="number" id="rule-spending-input" class="currency-input" value="5000" step="500">
+              </div>
+            </div>
+
+            <!-- Rule 2: Background GPS Location Fence -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  Require Approval Before Sharing Live Location
+                </h3>
+                <p>Prevents travel and commute agents from continuously streaming real-time physical coordinates to third-party mobility fleets without consent.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="rule-loc-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Rule 3: Outbound Email Preview Policy -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  Never Send Outbound Communications Without Preview
+                </h3>
+                <p>All emails, client letters, and external messages drafted by communications agents must be explicitly reviewed to prevent accidental health or personal disclosures.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="rule-email-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Rule 4: New Permission Request Alert -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                  Alert Immediately When Any Agent Requests New Sensor Access
+                </h3>
+                <p>Sends instant notification if an updated agent runtime requests access to microphone, biometric telemetry, or financial tokens.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="rule-alert-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Rule 5: Nighttime Cognitive Guard -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                  Nighttime Cognitive Vulnerability Guard (11:00 PM – 6:00 AM)
+                </h3>
+                <p>Blocks high-ticket commercial suggestions and promotional prompts during sleep preparation hours when decision fatigue makes users vulnerable to impulsive spending.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="rule-night-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Rule 6: Auto-Quarantine Violators -->
+            <div class="rule-setting-card">
+              <div class="rule-info">
+                <h3>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  Auto-Quarantine Agents Exceeding Safety Violations
+                </h3>
+                <p>Automatically isolates any agent runtime that attempts 2 or more policy breaches in 24 hours until manually re-authorized.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="rule-quarantine-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Reset Prototype Button -->
+          <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h4 style="font-size:0.9rem; font-weight:700;">Reset Prototype State</h4>
+              <p style="font-size:0.75rem; color:var(--text-muted);">Restore original 2040 sample actions, logs, and inferences for demonstration testing.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="guardianApp.resetToDefault(); renderAllViews(); showToast('State Reset', 'Restored default dataset.', 'success');">
+              Reset Demo Data
+            </button>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             SCREEN 7: FLIPKART APM '29 CASE SUBMISSION BRIEF & STRATEGY
+             ================================================================= -->
+        <section class="screen-view" id="screen-case-study">
+          
+          <div class="case-study-hero">
+            <h2>Flipkart APM '29 Case Strategy: AI Guardian</h2>
+            <p class="lead">
+              <strong>The 2040 Challenge:</strong> "Everyone has a personal AI agent that knows them better than they know themselves and carries out day-to-day tasks. Outline the ramifications of this paradigm and create a digital product that helps protect yourselves from it."
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="meta-chip">Product: AI Guardian</span>
+              <span class="meta-chip">Role: Associate Product Manager ('29)</span>
+              <span class="meta-chip">Focus: Trust, Privacy &amp; Consumer Agency</span>
+            </div>
+          </div>
+
+          <!-- 3 Architectural Pillars -->
+          <div class="apm-pillars-grid">
+            <div class="pillar-card">
+              <div class="metric-icon-box blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <h3>1. The Interception Engine</h3>
+              <p>Deterministic policy guardrails intercept high-stakes agent actions (e.g. checkout above ₹5,000, continuous GPS sharing, and external emails) before network execution.</p>
+            </div>
+
+            <div class="pillar-card">
+              <div class="metric-icon-box amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <h3>2. Explainable Trust Ledger</h3>
+              <p>Translates complex neural API calls into human-readable narratives: what the agent wants, why it recommended it, what personal data was accessed, and reversible alternatives.</p>
+            </div>
+
+            <div class="pillar-card">
+              <div class="metric-icon-box green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <h3>3. Synthetic Oblivion Rights</h3>
+              <p>Exposes the psychological and behavioral models inferred by agents, giving users the power to correct flawed deductions or purge manipulative insights.</p>
+            </div>
+          </div>
+
+          <!-- Deep-Dive Strategic Analysis Blocks -->
+          <div class="analysis-block">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Ramifications of the 2040 "Omniscient Agent" Paradigm
+            </h3>
+            <ul>
+              <li><strong>Asymmetric Behavioral Manipulation:</strong> When personal agents understand human cognitive biases and fatigue cycles better than the user does, commercial algorithms can time purchases to coincide with periods of weak willpower (e.g., late-night impulse tech buys).</li>
+              <li><strong>Erosion of Human Agency (Algorithmic Paternalism):</strong> As agents handle daily logistics seamlessly, humans risk losing the capacity to evaluate tradeoffs, question recommendations, or explore novel paths outside their inferred profile.</li>
+              <li><strong>Silent Financial Leakage:</strong> Autonomous micro-purchases and subscription reallocations compound over time, making it difficult for users to track cumulative spending without supervisory oversight.</li>
+              <li><strong>Irreversible Data Sprawl:</strong> Personal agents sharing background coordinates and medical schedules across decentralized networks create permanent digital footprints that cannot be recalled once dispatched.</li>
+            </ul>
+          </div>
+
+          <div class="analysis-block">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              Why Flipkart is Uniquely Positioned to Provide AI Guardian
+            </h3>
+            <p>
+              In 2040, Flipkart has evolved from an e-commerce platform into an indispensable digital lifestyle backbone. As the most trusted consumer touchpoint handling financial payments, household inventory, and physical delivery:
+            </p>
+            <ul style="margin-top:8px;">
+              <li><strong>Neutral Trust Broker:</strong> Users will not trust an ad-driven search engine or social network to oversee their privacy. Flipkart's commercial relationship is built on explicit transactional trust.</li>
+              <li><strong>Holistic Value vs Price Comparison:</strong> As demonstrated in the prototype, Flipkart can surface safer, cost-effective alternatives (like certified refurbished electronics or rentals) rather than blindly maximizing transaction size.</li>
+              <li><strong>Ecosystem Safeguard:</strong> By offering AI Guardian as an open standard, Flipkart cements consumer loyalty and establishes the gold standard for responsible autonomous commerce in India.</li>
+            </ul>
+          </div>
+
+          <div class="analysis-block">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              Key APM Success Metrics &amp; KPIs (2040 Evaluation Framework)
+            </h3>
+            <ul>
+              <li><strong>Intervention Precision Rate:</strong> Percentage of intercepted actions where user agrees with the flag (Target: &gt;88%). Minimizes review fatigue.</li>
+              <li><strong>Unintended Spend Prevention Index (USPI):</strong> Cumulative rupees saved by intercepting impulsive or unauthorized autonomous checkouts.</li>
+              <li><strong>Cognitive Autonomy Retention:</strong> Measured by user engagement with synthetic memory inspection and correction features.</li>
+              <li><strong>Trust Net Promoter Score (tNPS):</strong> User confidence that their personal agents are working in their genuine best interest.</li>
+            </ul>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- =====================================================================
+       GENERIC MODAL (Inspect Ledger Audit / Edit Memory)
+       ===================================================================== -->
+  <div class="modal-overlay" id="generic-modal" role="dialog" aria-modal="true">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="generic-modal-title">Record Details</h3>
+        <button class="modal-close-btn" onclick="closeGenericModal()" aria-label="Close Modal">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="generic-modal-body">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       GUIDED TOUR SCENARIO OVERLAY (Flipkart APM Submission Demo)
+       ===================================================================== -->
+  <aside class="tour-banner-overlay" id="tour-overlay" aria-live="assertive">
+    <div class="tour-header">
+      <span class="tour-step-pill" id="tour-step-pill">Step 1 of 5</span>
+      <button class="tour-close" onclick="closeGuidedDemo()" aria-label="Close Guided Demo">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <h4 class="tour-title" id="tour-title">1/5: The 2040 Autonomous Dilemma</h4>
+    <p class="tour-text" id="tour-text">
+      Imagine it's 2040. Your personal Flipkart Commerce Agent noticed an upcoming flight on your calendar and attempted to autonomously buy ₹12,999 Sony noise-cancelling headphones.
+    </p>
+    <div class="tour-footer">
+      <div class="tour-dots" id="tour-dots">
+        <!-- Injected dots -->
+      </div>
+      <button class="btn btn-primary btn-sm" id="tour-next-btn" onclick="nextDemoStep()">
+        See Interception
+      </button>
+    </div>
+  </aside>
+
+  <!-- Application Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
